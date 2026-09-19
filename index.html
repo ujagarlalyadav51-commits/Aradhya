@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Birthday Aruu ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #f7e8e8;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            touch-action: none;
+        }
+
+        .screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease-in-out;
+            padding: 15px;
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* SCREEN 1 */
+        #screen1 {
+            background: radial-gradient(circle, #fff1f1 0%, #f3d5d8 100%);
+        }
+
+        .tagline {
+            position: absolute;
+            top: 12%;
+            font-size: 20px;
+            color: #7a5257;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .heart-target {
+            font-size: 70px;
+            position: absolute;
+            top: 25%;
+            animation: float 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-12px); }
+        }
+
+        .bow-container {
+            position: absolute;
+            bottom: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .arrow {
+            font-size: 50px;
+            transform: rotate(-45deg);
+            transition: transform 0.05s linear;
+        }
+
+        .instruction {
+            position: absolute;
+            bottom: 8%;
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: #a07a7e;
+            font-weight: bold;
+        }
+
+        /* SCREEN 2 */
+        #screen2 {
+            background-color: #c2185b;
+            color: white;
+            text-align: center;
+        }
+
+        #screen2 h1 {
+            font-size: 42px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        #screen2 p {
+            font-size: 18px;
+            font-style: italic;
+        }
+
+        /* SCREEN 3 */
+        #screen3 {
+            background: linear-gradient(to bottom, #fde2e4, #fff1f2);
+            text-align: center;
+            justify-content: flex-start;
+            padding-top: 5vh;
+            overflow-y: auto;
+        }
+
+        .tree-container {
+            position: relative;
+            width: 100%;
+            max-width: 360px;
+            height: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            flex-shrink: 0;
+        }
+
+        #treeCanvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .wishes {
+            margin-top: 15px;
+            padding: 0 15px 30px 15px;
+            max-width: 450px;
+        }
+
+        .wishes h2 {
+            font-size: 32px;
+            color: #ad1457;
+            font-family: 'Georgia', serif;
+        }
+
+        .wishes .sub-title {
+            font-size: 14px;
+            color: #8d6e63;
+            margin-top: 2px;
+            font-style: italic;
+        }
+
+        .wish-message {
+            font-size: 13.5px;
+            color: #5d4037;
+            margin-top: 12px;
+            line-height: 1.6;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        /* Mobile Responsive Adjustments */
+        @media (max-width: 480px) {
+            .tagline { font-size: 18px; top: 10%; }
+            .heart-target { font-size: 60px; top: 22%; }
+            .arrow { font-size: 45px; }
+            #screen2 h1 { font-size: 36px; }
+            .wishes h2 { font-size: 28px; }
+            .tree-container { height: 280px; }
+            .wish-message { font-size: 12.5px; line-height: 1.5; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Screen 1: Arrow Shot -->
+    <div id="screen1" class="screen">
+        <div class="tagline">a little something, for you</div>
+        <div class="heart-target">💖</div>
+        <div class="bow-container" id="arrowContainer">
+            <div class="arrow" id="arrow">🏹</div>
+        </div>
+        <div class="instruction">PULL & RELEASE</div>
+    </div>
+
+    <!-- Screen 2: Wish -->
+    <div id="screen2" class="screen hidden">
+        <p style="opacity: 0.8;">make a wish...</p>
+        <h1>Happy Birthday Aruu ❤️</h1>
+        <p>to someone worth celebrating</p>
+    </div>
+
+    <!-- Screen 3: Heart Tree Blooming -->
+    <div id="screen3" class="screen hidden">
+        <div class="tree-container">
+            <canvas id="treeCanvas"></canvas>
+        </div>
+        <div class="wishes">
+            <h2>Happy Birthday Aruu ❤️</h2>
+            <p class="sub-title">and... make it count | here's to a year that blooms</p>
+            
+            <div class="wish-message">
+                Happy Birthday to the most amazing person, my dearest <b>Aruu</b>! 🎉✨ On your special day, I wish you endless happiness, true love, and all the success in the world 💖. You bring so much light, warmth, and genuine smiles into my life just by being yourself 🌸. May this new year of your life be filled with unforgettable moments, beautiful surprises, and dreams coming true ✨. Never stop shining, dreaming, and blooming into the wonderful soul you are. Always stay happy and healthy! 💖🎂🎉🎈✨
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const arrowContainer = document.getElementById('arrowContainer');
+        const arrow = document.getElementById('arrow');
+        const screen1 = document.getElementById('screen1');
+        const screen2 = document.getElementById('screen2');
+        const screen3 = document.getElementById('screen3');
+        const canvas = document.getElementById('treeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let isDragging = false;
+        let startY = 0;
+
+        const startDrag = (y) => {
+            isDragging = true;
+            startY = y;
+            arrow.style.transition = 'none';
+        };
+
+        const moveDrag = (y) => {
+            if (!isDragging) return;
+            let diff = y - startY;
+            if (diff > 0 && diff < 100) {
+                arrow.style.transform = `rotate(-45deg) translateY(${diff}px)`;
+            }
+        };
+
+        const endDrag = () => {
+            if (!isDragging) return;
+            isDragging = false;
+
+            arrow.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+            arrow.style.transform = 'rotate(-45deg) translateY(-800px)';
+
+            setTimeout(() => {
+                screen1.classList.add('hidden');
+                screen2.classList.remove('hidden');
+
+                setTimeout(() => {
+                    screen2.classList.add('hidden');
+                    screen3.classList.remove('hidden');
+                    initTreeCanvas();
+                }, 2500);
+
+            }, 400);
+        };
+
+        arrowContainer.addEventListener('touchstart', (e) => startDrag(e.touches[0].pageY));
+        window.addEventListener('touchmove', (e) => moveDrag(e.touches[0].pageY));
+        window.addEventListener('touchend', endDrag);
+
+        arrowContainer.addEventListener('mousedown', (e) => startDrag(e.pageY));
+        window.addEventListener('mousemove', (e) => moveDrag(e.pageY));
+        window.addEventListener('mouseup', endDrag);
+
+        // Advanced Tree with Detailed Heart Branches & Bloom
+        function initTreeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+            const width = rect.width;
+            const height = rect.height;
+
+            const startX = width / 2;
+            const startY = height - 10;
+
+            // Generate Branches ending in a Heart-shaped Canopy
+            const branches = [];
+            const hearts = [];
+            const colors = ['#e91e63', '#ec407a', '#f48fb1', '#ff4081', '#d81b60', '#ff80ab', '#ffb2dd'];
+
+            function getHeartPoint(t, scale) {
+                let x = 16 * Math.pow(Math.sin(t), 3);
+                let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+                return {
+                    x: startX + x * scale,
+                    y: (height - 180) + y * scale
+                };
+            }
+
+            // Create Branches target points along heart shape
+            const numBranches = 24;
+            for (let i = 0; i < numBranches; i++) {
+                let angle = (i / numBranches) * Math.PI * 2;
+                let target = getHeartPoint(angle, 5.5);
+                
+                // Branch path points
+                let midX = startX + (target.x - startX) * 0.5 + (Math.random() - 0.5) * 40;
+                let midY = startY - 90 + (Math.random() - 0.5) * 30;
+
+                branches.push({
+                    x1: startX, y1: startY,
+                    cx: midX, cy: midY,
+                    x2: target.x, y2: target.y,
+                    width: Math.random() * 2 + 1.5
+                });
+            }
+
+            // Generate dense blooming hearts within and on the edges
+            const totalHearts = 220;
+            for (let i = 0; i < totalHearts; i++) {
+                let t = Math.random() * Math.PI * 2;
+                let r = Math.sqrt(Math.random()); 
+                let pt = getHeartPoint(t, 6.2 * r);
+
+                hearts.push({
+                    x: pt.x,
+                    y: pt.y,
+                    size: Math.random() * 7 + 5,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    delay: 600 + Math.random() * 1400
+                });
+            }
+
+            function drawHeart(x, y, size, color) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.beginPath();
+                ctx.fillStyle = color;
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(-size / 2, -size / 2, -size, size / 3, 0, size);
+                ctx.bezierCurveTo(size, size / 3, size / 2, -size / 2, 0, 0);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            let startTime = null;
+            function animate(timestamp) {
+                if (!startTime) startTime = timestamp;
+                let progress = timestamp - startTime;
+
+                ctx.clearRect(0, 0, width, height);
+
+                // 1. Draw Main Trunk
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(startX, startY - 70);
+                ctx.lineWidth = 7;
+                ctx.strokeStyle = '#5a3d28';
+                ctx.lineCap = 'round';
+                ctx.stroke();
+
+                // 2. Draw Growing Branches
+                let branchProgress = Math.min(1, progress / 800);
+                branches.forEach(b => {
+                    ctx.beginPath();
+                    ctx.moveTo(b.x1, b.y1 - 65);
+                    
+                    let currentCX = b.x1 + (b.cx - b.x1) * branchProgress;
+                    let currentCY = (b.y1 - 65) + (b.cy - (b.y1 - 65)) * branchProgress;
+                    let currentX2 = b.x1 + (b.x2 - b.x1) * branchProgress;
+                    let currentY2 = (b.y1 - 65) + (b.y2 - (b.y1 - 65)) * branchProgress;
+
+                    ctx.quadraticCurveTo(currentCX, currentCY, currentX2, currentY2);
+                    ctx.lineWidth = b.width;
+                    ctx.strokeStyle = '#6d4c41';
+                    ctx.stroke();
+                });
+
+                // 3. Draw Blooming Hearts
+                hearts.forEach(h => {
+                    if (progress > h.delay) {
+                        let scale = Math.min(1, (progress - h.delay) / 400);
+                        drawHeart(h.x, h.y, h.size * scale, h.color);
+                    }
+                });
+
+                if (progress < 2500) {
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+    </script>
+</body>
+</html>
